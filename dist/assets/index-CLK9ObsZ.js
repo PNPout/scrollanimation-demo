@@ -3925,8 +3925,12 @@ vec3 deformationCurve(vec3 position, vec2 uv) {
   
   
   
-    
-  position.y = position.y - (pow(uv.x, 1.5) * min(abs(uScrollVelocity), 5.0) * sign(uScrollVelocity) * -0.01);
+  
+  
+
+  
+  position.y = position.y - (uv.x * min(abs(uScrollVelocity), 1.2) * sign(uScrollVelocity) * -0.01);
+
   return position;
 }
 
