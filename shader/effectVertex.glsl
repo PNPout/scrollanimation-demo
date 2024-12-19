@@ -18,8 +18,12 @@ out vec2 vUvCover;
 
 
 vec3 deformationCurve(vec3 position, vec2 uv) {
-  position.y = position.y - (sin(uv.x * PI) * min(abs(uScrollVelocity), 5.0) * sign(uScrollVelocity) * -0.01);
-
+  //position.y = position.y - (sin(uv.x * PI) * min(abs(uScrollVelocity), 5.0) * sign(uScrollVelocity) * -0.01);
+  //position.y = position.y - (pow(uv.x, 2) * PI * min(abs(uScrollVelocity), 5.0) * sign(uScrollVelocity) * -0.01);
+  // position.y = position.y - (uv.x * PI * min(abs(uScrollVelocity), 2.0) * sign(uScrollVelocity) * -0.02);
+  //position.y = position.y - (pow(uv.x, 1.5) * min(abs(uScrollVelocity), 5.0) * sign(uScrollVelocity) * -0.01);
+    //position.y = position.y - ((uv.x + pow(uv.x, 2)) * 0.5 * min(abs(uScrollVelocity), 5.0) * sign(uScrollVelocity) * -0.01);
+  position.y = position.y - (pow(uv.x, 1.5) * min(abs(uScrollVelocity), 5.0) * sign(uScrollVelocity) * -0.01);
   return position;
 }
 

@@ -69,3 +69,36 @@ float snoise(vec2 v)
   g.yz = a0.yz * x12.xz + h.yz * x12.yw;
   return 130.0 * dot(m, g);
 }
+
+float triangularNoise(vec2 v) {
+    // Generate standard simplex noise
+    float n = snoise(v);
+
+    // Transform the noise into a triangular wave
+    return abs(fract(n) - 0.5) * 2.0; // Normalize to [0, 1]
+}
+
+float largeTriangularPattern(vec2 v) {
+    // Scale the coordinates to control triangle size
+    vec2 scaledCoords = v * 10.0; // Adjust scale to control triangle size
+
+    // Generate noise at the scaled coordinates
+    float n = snoise(scaledCoords);
+
+    // Map noise to a triangular wave
+    float triangleWave = abs(fract(n) - 0.5) * 2.0;
+
+    return triangleWave;
+}
+
+float triangularGrid(vec2 uv, float scale) {
+    uv *= scale;
+
+    // Create skewed coordinates for the triangular grid
+    float y = uv.y * 2.0 / sqrt(3.0); // Adjust y for equilateral triangle tiling
+    float xi = floor(uv.x + y); // Skewed coordinate system
+    float yi = floor(uv.x - y);
+
+    // Return an alternating checkerboard value based on triangle parity
+    return mod(xi + yi, 2.0); // 0 or 1 depending on triangle
+}
