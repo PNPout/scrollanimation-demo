@@ -32,11 +32,14 @@ void main() {
   ) * 15.0;
 
   // create noise
-  float noise = snoise(gl_FragCoord.xy);
+   float noise = snoise(gl_FragCoord.xy);
+  //float noise = triangularNoise(gl_FragCoord.xy) * 0.2;
+  // float noise = largeTriangularPattern(gl_FragCoord.xy) * 0.2;
+   // float noise = triangularGrid(gl_FragCoord.xy, 10.0) * 0.2;
 
   // modify texture coordinates
-  texCoords.x += mix(0.0, circle * noise * 0.01, uMouseEnter + uScrollVelocity * 0.1);
-  texCoords.y += mix(0.0, circle * noise * 0.01, uMouseEnter + uScrollVelocity * 0.1);
+  texCoords.x += mix(0.0, circle * noise * 0.002, uMouseEnter + uScrollVelocity * 0.1);
+  texCoords.y += mix(0.0, circle * noise * 0.002, uMouseEnter + uScrollVelocity * 0.1);
 
   // texture
   vec3 texture = vec3(texture(uTexture, texCoords));

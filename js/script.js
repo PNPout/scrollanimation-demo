@@ -18,11 +18,18 @@ let scroll = {
   scrollVelocity: 0
 }
 
-const lenis = new Lenis()
+const lenis = new Lenis({
+  duration: 1.1,
+  easing: (t) => t * (2 - t),
+})
 
 lenis.on('scroll', (e) => {
-  scroll.scrollY = window.scrollY
-  scroll.scrollVelocity = e.velocity
+  // scroll.scrollY = window.scrollY
+  // scroll.scrollVelocity = e.velocity
+
+      const dampedVelocity = e.velocity * 0.8; // Reduce the velocity impact
+    scroll.scrollY = window.scrollY;
+    scroll.scrollVelocity = dampedVelocity;
 })
 
 function scrollRaf(time) {
@@ -109,9 +116,9 @@ const setMediaStore = (scrollY) => {
     observer.observe(media)
 
     media.dataset.index = String(i)
-    media.addEventListener('mouseenter', () => handleMouseEnter(i))
-    media.addEventListener('mousemove', e => handleMousePos(e, i))
-    media.addEventListener('mouseleave', () => handleMouseLeave(i))
+    //media.addEventListener('mouseenter', () => handleMouseEnter(i))
+    //media.addEventListener('mousemove', e => handleMousePos(e, i))
+    //media.addEventListener('mouseleave', () => handleMouseLeave(i))
 
     const bounds = media.getBoundingClientRect()
     const imageMaterial = material.clone()
@@ -245,7 +252,7 @@ const render = (time = 0) => {
       object.material.uniforms.uTime.value = time
       object.material.uniforms.uCursor.value.x = cursorPos.current.x
       object.material.uniforms.uCursor.value.y = cursorPos.current.y
-      object.material.uniforms.uScrollVelocity.value = scroll.scrollVelocity
+      object.material.uniforms.uScrollVelocity.value = scroll.scrollVelocity * 0.2
       object.material.uniforms.uMouseOverPos.value.x = object.mouseOverPos.current.x
       object.material.uniforms.uMouseOverPos.value.y = object.mouseOverPos.current.y
       object.material.uniforms.uMouseEnter.value = object.mouseEnter
